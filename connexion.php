@@ -57,7 +57,7 @@ require('src/connexionBDD.php');
     </header>
 
     <div class="container">
-        <p id="info">Bienvenue sur mon site,si vous n'êtes pas inscrit, <a href="index.php">inscrivez-vous.</a></p>
+        <p id="info">Bienvenue sur mon site,si vous n'êtes pas inscrit, <a href="registration.php">inscrivez-vous.</a></p>
 	 	
 		<?php
 			if(isset($_GET['error'])){

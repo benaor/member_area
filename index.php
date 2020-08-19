@@ -1,6 +1,14 @@
 <?php
+session_start();
+
+// if already connect 
+if(isset($_SESSION['connect'])){
+	header('location: index.php');
+	exit();
+}
 
 require('src/connexionBDD.php');
+
 
     // If user complete all input 
     if( !empty($_POST['pseudo']) && 
@@ -25,14 +33,16 @@ require('src/connexionBDD.php');
                     // If email already exist 
                     if($email_verif['numberEmail'] != 0){
                         
-                        header('location: ../member_area/index.php/?error=1&email=1');
+                        header('location: ?error=1&email=1');
+                        exit();
 
                     } //if email already exist
                 }
 
             } else { //compare password
 
-                header('location: ../member_area/index.php/?error=1&pass=1');
+                header('location: ?error=1&pass=1');
+                exit();
 
             } // compare password 
 
@@ -41,11 +51,12 @@ require('src/connexionBDD.php');
             $password   = "25".sha1($password."5811")."44";
 
             //INSERT USER IN BDD
-            $req = $bdd->prepare('INSERT INTO users(pseudo, email, password, key_secret) VALUES(?, ?, ?, ?)');
-            $req->execute(array($pseudo, $email, $password, $secret));
+            $req = $bdd->prepare('INSERT INTO users(pseudo, email, password, key_secret) VALUES(?,?,?,?)');
+            $value = $req->execute(array($pseudo, $email, $password, $secret));
 
             //Registration is a success
-            header('location: ../member_area/index.php/?success=1');
+            header('location: ?success=1');
+            exit();
 
 
         } // empty 4 $_POST

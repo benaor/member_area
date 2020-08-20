@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('src/log.php');
 
 // if already connect 
 if(!isset($_SESSION['connect'])){

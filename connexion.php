@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('src/log.php');
 
 // if already connect 
 if(isset($_SESSION['connect'])){
@@ -30,11 +31,19 @@ require('src/connexionBDD.php');
 
                 $_SESSION['connect']   = 1;
                 $_SESSION['pseudo']    = $user['pseudo'];
+
+                //Keep the connexion
+                if( isset( $_POST['connect'] ) ){
+                    setcookie('log', $user['key_secret'], time() + 365*24*3600, '/', null, false, true);
+                }
+
                 header('location: ?success=1');
+                exit();
 
             } else {  // If password is incorrect 
             
                 header('location: ?error=1');
+                exit();
 
             }
         }
@@ -47,7 +56,7 @@ require('src/connexionBDD.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inscription</title>
+    <title>Connexion</title>
     <link rel="stylesheet" href="design/style.css">
 </head>
 
